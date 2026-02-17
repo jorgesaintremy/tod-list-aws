@@ -76,8 +76,6 @@ pipeline{
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE'){
                     unstash name:'code'
                     echo WORKSPACE
-                   // def BASE_URL = sh "aws cloudformation describe-stacks --stack-name todo-list-aws-staging --query 'Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue' --region us-east-1 --output text"
-                    //echo "$BASE_URL"
                     sh '''
                         ls -lart
                         whoami

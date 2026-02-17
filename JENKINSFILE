@@ -112,7 +112,7 @@ pipeline{
                     git remote -v
                     git checkout master
                     git merge develop
-                   
+                    git log --all --graph --decorate --oneline
                 '''
                 deleteDir()
                 }

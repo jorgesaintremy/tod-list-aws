@@ -83,7 +83,7 @@ pipeline{
                         export BASE_URL=$(aws cloudformation describe-stacks --stack-name todo-list-aws-staging --query 'Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue' --region us-east-1 --output text)
                         echo $BASE_URL
                         export PYTHONPATH=${WORKSPACE}
-                        python3 -m pytest --junitxml=result-integration.xml test/integration/todoApiTest.py
+                        python3 -m pytest -v --junitxml=result-integration.xml test/integration/todoApiTest.py
                     '''
                     stash name: 'integration-res', includes: 'result-integration.xml'
                     junit 'result*.xml'

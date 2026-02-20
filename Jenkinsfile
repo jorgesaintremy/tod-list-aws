@@ -1,13 +1,15 @@
 pipeline{
-    agent any
+    agent none
     
     options {skipDefaultCheckout()}
     
     stages{
         stage('Get Code'){
+            agent{label 'ubuntu_aws'}
             steps{
                 git url: 'https://github.com/jorgesaintremy/tod-list-aws.git', branch: 'master'
                 echo WORKSPACE
+                sh 'rm samconfig.toml'
                 sh 'ls -lart'
                 sh 'whoami'
                 sh 'hostname'
@@ -21,18 +23,19 @@ pipeline{
                 unstash name:'code'
                 echo WORKSPACE
                 sh '''
+                    wget https://raw.githubusercontent.com/jorgesaintremy/todo-list-aws-config/refs/heads/production/samconfig.toml
                     ls -lart
                     whoami
                     hostname
                     sam build
                     sam validate --region us-east-1
-                    sam deploy --config-file samconfig.toml --config-env production
+                    sam deploy --config-file samconfig.toml
                 '''
                 deleteDir()
                 }
             }
         stage('Rest Test'){
-            agent{label 'ubuntu_aws'}
+            agent{label 'ubuntu_aws_2'}
             environment{
                 BASE_URL = sh "aws cloudformation describe-stacks --stack-name todo-list-aws-production --query 'Stacks[0].Outputs[?OutputKey==`BaseUrlApi`].OutputValue' --region us-east-1 --output text"
             }

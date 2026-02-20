@@ -1,4 +1,4 @@
-# Test CP14 reto 5 push en rama master
+# Test CP14 reto 5 push rama master
 
 # todo-list-aws
 

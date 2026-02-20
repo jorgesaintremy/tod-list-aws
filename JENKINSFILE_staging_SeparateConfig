@@ -113,7 +113,8 @@ pipeline{
                     git fetch https://$PASSWORD@github.com/jorgesaintremy/tod-list-aws.git
                     git remote -v
                     git checkout master
-                    git merge develop
+                    git config --global merge.ours.driver true
+                    git merge origin/develop
                     git log --all --graph --decorate --oneline
                    
                 '''

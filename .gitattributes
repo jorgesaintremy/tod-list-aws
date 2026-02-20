@@ -1,0 +1,2 @@
+# Mantener el Jenkinsfile al mergear
+Jenkinsfile merge=ours
